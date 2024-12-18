@@ -23,7 +23,7 @@ class WeatherSeeder extends Seeder
         $postojeciGrad = WeatherModel::where('town_name', $grad)->first();
         if($postojeciGrad){
             $this->command->getOutput()->error("Ovaj grad vec postoji u bazi");
-            return;
+            continue;
         }
 
         $temperatura = $this->command->getOutput()->ask("Unesite temperaturu");
