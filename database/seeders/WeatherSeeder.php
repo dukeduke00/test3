@@ -5,39 +5,35 @@ namespace Database\Seeders;
 use App\Models\WeatherModel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\CitiesModel;
+use Faker\Factory as Faker;
+use Carbon\Carbon;
+
 
 class WeatherSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run()
     {
-        $grad = $this->command->getOutput()->ask("Unesite ime grada");
-        if($grad === null)
-        {
-            $this->command->getOutput()->error("Niste unijeli ime grada");
-            return;
+        $faker = Faker::create();
+
+        //  Povuci sve gradove iz baze koristeći Eloquent
+        $cities = CitiesModel::all();  // Eloquent metoda za dobijanje svih gradova
+
+
+        foreach ($cities as $city) {
+            // Generiši jednu nasumičnu temperaturu za svaki grad
+            $randomTemperature = $faker->numberBetween(-10, 35); // Nasumična temperatura
+
+            // Dodaj podatke u tabelu weather
+            WeatherModel::create([
+                'city_id' => $city->id,
+                'temperature' => $randomTemperature,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         }
-
-        $postojeciGrad = WeatherModel::where('town_name', $grad)->first();
-        if($postojeciGrad){
-            $this->command->getOutput()->error("Ovaj grad vec postoji u bazi");
-            continue;
-        }
-
-        $temperatura = $this->command->getOutput()->ask("Unesite temperaturu");
-        if($temperatura === null)
-        {
-            $this->command->getOutput()->error("Niste unijeli temperaturu");
-            return;
-        }
-
-        WeatherModel::create([
-            'town_name' => $grad,
-            'temperature' => $temperatura,
-        ]);
-
-        $this->command->info("Uspjesno ste dodali grad i temperaturu.");
     }
 }
