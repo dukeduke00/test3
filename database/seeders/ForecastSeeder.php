@@ -35,7 +35,7 @@ class ForecastSeeder extends Seeder
                 // Dodaj prognozu u tabelu koristeći Eloquent model
                 ForecastModel::create([
                     'city_id' => $city->id,
-                    'temperature' => $faker->numberBetween(-10, 15), // Nasumična temperatura
+                    'temperature' => rand(-10, 15), // Nasumična temperatura
                     'forecasted_at' => $randomDate,
                     'created_at' => now(),
                     'updated_at' => now(),

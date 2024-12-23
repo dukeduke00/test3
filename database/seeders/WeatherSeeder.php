@@ -24,16 +24,19 @@ class WeatherSeeder extends Seeder
 
 
         foreach ($cities as $city) {
-            // Generiši jednu nasumičnu temperaturu za svaki grad
-            $randomTemperature = $faker->numberBetween(-10, 35); // Nasumična temperatura
+
+            $userWeather = WeatherModel::where(['city_id' => $city->id])->first();
+            if($userWeather !== null){
+                $this->command->getOutput()->error("Ovaj grad vec postoji");
+                continue;
+            }
+
 
             // Dodaj podatke u tabelu weather
             WeatherModel::create([
                 'city_id' => $city->id,
-                'temperature' => $randomTemperature,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+                'temperature' => rand(10, 19),
+           ]);
         }
     }
 }
