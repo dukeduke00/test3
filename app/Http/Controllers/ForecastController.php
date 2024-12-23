@@ -2,23 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ForecastModel;
+use App\Models\WeatherModel;
+
 class ForecastController extends Controller
 {
-    public function index($city)
+    public function index()
     {
-        $forecasts = [
-            "doboj" => [7, 11, 5, 0, -1],
-            "sarajevo" => [5, 6, 0, -1, -3],
-        ];
+        $sedmicnaPrognoza = ForecastModel::all();
 
-        $city = strtolower($city);
-
-        if (!array_key_exists($city, $forecasts)) {
-            die("Ovaj grad ne postoji");
-        }
-
-        dd($forecasts[$city]);
-
+        return view('fiveDaysWeather', compact('sedmicnaPrognoza'));
     }
 
 

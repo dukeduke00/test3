@@ -12,4 +12,9 @@ class ForecastModel extends Model
         'temperature',
         'forecasted_at',
     ];
+
+    public function town()
+    {
+        return $this->hasOne( 'App\Models\CitiesModel', 'id', 'city_id' );
+    }
 }
