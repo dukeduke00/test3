@@ -10,4 +10,15 @@ class CitiesModel extends Model
     protected $fillable = [
         'city',
     ];
+
+   public function forecasts()
+   {
+       return $this->hasMany(ForecastModel::class, 'city_id', 'id');
+
+   }
+
+   public function weather()
+   {
+       return $this->hasMany(WeatherModel::class, 'city_id', 'id');
+   }
 }

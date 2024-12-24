@@ -21,6 +21,8 @@ Route::get('/prognoza', [\App\Http\Controllers\WeatherController::class,'index']
 
 Route::get('/sedmicnaPrognoza', [\App\Http\Controllers\ForecastController::class,'index']);
 
-Route::get('/forecast/{city}', [\App\Http\Controllers\ForecastController::class, 'index']);
+Route::get('/forecast/{city:city}', [\App\Http\Controllers\ForecastController::class, 'allForecasts']);
+
+
 
 
