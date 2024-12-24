@@ -14,6 +14,8 @@ class ForecastSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+
+
     public function run(): void
     {
         $faker = Faker::create();
@@ -31,13 +33,23 @@ class ForecastSeeder extends Seeder
                 // Random datum unutar intervala
                 $randomDate = $faker->dateTimeBetween($startDate, $endDate);
 
+                $weatherTypes = ForecastModel::WEATHER_TYPES[rand(0,2)];
+
+                $probability = null;
+
+                if($weatherTypes !== 'sunny')
+                {
+                    $probability = rand(1, 100);
+                }
+
                 // Dodaj prognozu u tabelu koristeći Eloquent model
                 ForecastModel::create([
                     'city_id' => $city->id,
                     'temperature' => rand(-10, 15), // Nasumična temperatura
-                    'forecasted_at' => $randomDate,
-                    'created_at' => now(),
-                    'updated_at' => now(),
+                    'weather_type' => $weatherTypes,
+                    'probability' => $probability,
+                    'forecasted_at' => $randomDate
+
                 ]);
             }
         }

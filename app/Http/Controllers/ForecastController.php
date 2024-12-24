@@ -12,7 +12,8 @@ class ForecastController extends Controller
     {
         $sedmicnaPrognoza = ForecastModel::all();
 
-        return view('fiveDaysWeather', compact('sedmicnaPrognoza'));
+        return view('forecasts', compact('sedmicnaPrognoza'));
+
     }
 
     public function allForecasts(CitiesModel $city)

@@ -7,7 +7,7 @@
 
 @foreach($city->forecasts as $prognoza)
 
-    <p> Datum: {{ date('d.m.Y.', strtotime($prognoza->forecasted_at)) }} - Temperatura: {{ $prognoza->temperature }} °C</p>
+    <p> Datum: {{ date('d.m.Y.', strtotime($prognoza->forecasted_at)) }}   -   Temperatura: {{ $prognoza->temperature }} °C - Tip vremena: {{ $prognoza->weather_type }} - Mogucnost padavine: {{ $prognoza->probability }}</p>
 @endforeach
 
 

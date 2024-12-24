@@ -11,7 +11,11 @@ class ForecastModel extends Model
         'city_id',
         'temperature',
         'forecasted_at',
+        'weather_type',
+        'probability',
     ];
+
+    const WEATHER_TYPES = ['rainy', 'snowy', 'sunny'];
 
     public function town()
     {
