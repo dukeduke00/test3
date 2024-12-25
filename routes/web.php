@@ -22,9 +22,9 @@ Route::get('/admin/weather', [\App\Http\Controllers\WeatherController::class,'in
 
 Route::post('/admin/weather/update', [\App\Http\Controllers\AdminWeatherController::class, 'update'])->name('weather.update');
 
-Route::get('/admin/forecasts', [ForecastController::class, 'index']);
+Route::view('/admin/forecasts', 'admin.forecast_index');
 
-Route::post('admin/forecasts/update', [\App\Http\Controllers\AdminForecastsController::class, 'update'])->name('forecasts.update');
+Route::post('admin/forecasts/create', [\App\Http\Controllers\AdminForecastsController::class, 'create'])->name('forecasts.create');
 
 Route::get('/sedmicnaPrognoza', [\App\Http\Controllers\ForecastController::class,'index']);
 

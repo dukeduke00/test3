@@ -13,7 +13,7 @@ class CitiesModel extends Model
 
    public function forecasts()
    {
-       return $this->hasMany(ForecastModel::class, 'city_id', 'id');
+       return $this->hasMany(ForecastModel::class, 'city_id', 'id')->orderBy('forecasted_at');
 
    }
 

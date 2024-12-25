@@ -12,10 +12,7 @@ class WeatherModel extends Model
         'temperature',
     ];
 
-    public function city()
-    {
-        return $this->hasOne('App\Models\CitiesModel', 'id', 'city_id');
-    }
+
 }
 
 // Relacije:

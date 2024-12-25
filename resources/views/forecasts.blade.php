@@ -1,8 +1,6 @@
-@php
-    $groupedByTown = $sedmicnaPrognoza->groupBy('town.city');
-@endphp
 
-<form  method="POST" action="{{ route('forecasts.update') }}">
+
+ <form  method="POST" action="{{ route('forecasts.update') }}">
 
     @csrf
 
