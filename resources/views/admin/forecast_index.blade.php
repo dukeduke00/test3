@@ -27,31 +27,7 @@
         @foreach($city->forecasts as $forecast)
 
             @php
-                $boja;
-
-                if($forecast->temperature <= 0)
-                    {
-                        $boja = 'lightblue';
-
-                    }
-
-                else if($forecast->temperature >= 1 && $forecast->temperature <= 15)
-                    {
-                        $boja = 'blue';
-                    }
-
-                else if($forecast->temperature > 15 && $forecast->temperature <= 25)
-                    {
-                        $boja = 'green';
-                    }
-
-
-
-                else
-                    {
-                        $boja = 'red';
-                    }
-
+                $boja = \App\Http\ForecastHelper::getColorByTemperature($forecast->temperature)
             @endphp
 
             <li>Datum: {{ date('d.m.Y.', strtotime($forecast->forecasted_at)) }}   - <span style="color: {{ $boja }}">  Temperatura:{{ $forecast->temperature }}</span></li>
