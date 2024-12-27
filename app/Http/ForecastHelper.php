@@ -4,6 +4,22 @@ namespace  App\Http;
 
 class ForecastHelper
 {
+
+    const WEATHER_ICONS = [
+        "rainy" => 'fa-solid fa-cloud-rain',
+        "sunny" => 'fa-solid fa-sun',
+        'snowy' => 'fa-regular fa-snowflake',
+    ];
+
+    public static function IconsByWeatherType($weatherType)
+    {
+        $icon = self::WEATHER_ICONS[$weatherType];
+
+        return $icon;
+    }
+
+
+
     public static function getColorByTemperature($temperature)
     {
 
@@ -33,4 +49,6 @@ class ForecastHelper
         return $boja;
 
     }
+
+
 }
