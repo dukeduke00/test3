@@ -23,17 +23,44 @@ class ForecastSeeder extends Seeder
         // Povuci sve gradove iz baze koristeći Eloquent
         $cities = CitiesModel::all();  // Eloquent metoda za dobijanje svih gradova
 
-        // Interval datuma od 19. decembra do 23. decembra 2024.
-        $startDate = Carbon::create(2024, 12, 19);
-        $endDate = Carbon::create(2024, 12, 23);
+        $dates =
+        [
+            Carbon::create(2024, 12, 26),
+            Carbon::create(2024, 12, 27),
+            Carbon::create(2024, 12, 28),
+            Carbon::create(2024, 12, 29),
+            Carbon::create(2024, 12, 30),
+
+        ];
 
         foreach ($cities as $city) {
             // Generiši 5 random temperatura za svaki grad
-            foreach (range(1, 5) as $index) {
-                // Random datum unutar intervala
-                $randomDate = $faker->dateTimeBetween($startDate, $endDate);
 
-                $weatherTypes = ForecastModel::WEATHER_TYPES[rand(0,2)];
+            $previousTemperature = null; // Cuvanje temperature iz prethodnog dana
+
+
+            foreach ($dates as $date) {
+
+                $weatherTypes = ForecastModel::WEATHER_TYPES[rand(0,3)];
+
+                if($previousTemperature === null) {
+
+                    $temperature = match ($weatherTypes) {
+                      'sunny' => rand(-15, 42),
+                      'rainy' => rand(-5, 15),
+                      'snowy' => rand(-15, 1),
+                      'cloudy' => rand(-15, 15),
+                    };
+
+                }
+
+                else
+                {
+                    $minTemperature = max($previousTemperature - 5, -15); // Minimalna temperatura (ne manje od -15)
+                    $maxTemperature = min($previousTemperature + 5, 42);  // Maksimalna temperatura (ne više od 42)
+
+                    $temperature = rand($minTemperature, $maxTemperature);
+                }
 
                 $probability = null;
 
@@ -45,12 +72,14 @@ class ForecastSeeder extends Seeder
                 // Dodaj prognozu u tabelu koristeći Eloquent model
                 ForecastModel::create([
                     'city_id' => $city->id,
-                    'temperature' => rand(-10, 15), // Nasumična temperatura
+                    'temperature' => $temperature,
                     'weather_type' => $weatherTypes,
                     'probability' => $probability,
-                    'forecasted_at' => $randomDate
+                    'forecasted_at' => $date,
 
                 ]);
+
+                $previousTemperature = $temperature; // Update prethodne temperature
             }
         }
     }

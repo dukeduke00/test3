@@ -9,6 +9,7 @@ class ForecastHelper
         "rainy" => 'fa-solid fa-cloud-rain',
         "sunny" => 'fa-solid fa-sun',
         'snowy' => 'fa-regular fa-snowflake',
+        'cloudy' => 'fa-solid fa-cloud',
     ];
 
     public static function IconsByWeatherType($weatherType)

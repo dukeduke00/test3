@@ -15,7 +15,7 @@ class ForecastModel extends Model
         'probability',
     ];
 
-    const WEATHER_TYPES = ['rainy', 'snowy', 'sunny'];
+    const WEATHER_TYPES = ['rainy', 'snowy', 'sunny', 'cloudy'];
 
     public function town()
     {
