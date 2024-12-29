@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
 
 Route::get('/admin/weather', [\App\Http\Controllers\WeatherController::class,'index']);
 
@@ -28,7 +26,13 @@ Route::post('admin/forecasts/create', [\App\Http\Controllers\AdminForecastsContr
 
 Route::get('/sedmicnaPrognoza', [\App\Http\Controllers\ForecastController::class,'index']);
 
-Route::get('/forecast/{city:city}', [\App\Http\Controllers\ForecastController::class, 'allForecasts']);
+Route::get('/forecast/search', [\App\Http\Controllers\ForecastController::class, 'search'])->name('forecast.search');
+
+Route::get('/forecast/{city:city}', [\App\Http\Controllers\ForecastController::class, 'allForecasts'])->name('forecast.permalink');
+
+
+
+
 
 
 
