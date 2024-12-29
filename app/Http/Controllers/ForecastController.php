@@ -6,6 +6,7 @@ use App\Models\CitiesModel;
 use App\Models\ForecastModel;
 use App\Models\WeatherModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ForecastController extends Controller
 {
@@ -34,7 +35,17 @@ class ForecastController extends Controller
             return redirect()->back()->with('error', 'Nismo pronasli nijedan grad!');
         }
 
-        return view('search_results', compact('cities'));
+        $userFavourites = [];
+
+        if(Auth::check())
+        {
+            $userFavourites = Auth::user()->cityFavourites();
+
+            $userFavourites = $userFavourites->pluck('city_id')->toArray(); // pluck vraca samo odredjeni podatak koji navedemo, i moze vratit max 2 podatka
+
+        }
+
+        return view('search_results', compact('cities', 'userFavourites'));
     }
 
 

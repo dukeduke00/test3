@@ -2,17 +2,57 @@
 
 @section('content')
 
+
+
     @if(session('error'))
-        <div class="alert alert-danger">
+        <div class="alert alert-danger text-center">
             {{ session('error') }}
         </div>
     @endif
 
-    <form method="GET" action="{{ route('forecast.search') }}" style="margin-top:350px"  class="d-flex justify-content-center align-items-center">
+    <div class="container mt-4">
+        <!-- Search Bar -->
+        <form method="GET" action="{{ route('forecast.search') }}" class="mb-5">
+            <div class="input-group">
+                <input
+                    class="form-control form-control-lg"
+                    type="text"
+                    name="city"
+                    placeholder="Unesite ime grada"
+                    aria-label="Unesite ime grada"
+                >
+                <button class="btn btn-primary btn-lg" type="submit">Pronađi</button>
+            </div>
+        </form>
 
-        <div class="d-flex flex-column gap-3">
-            <input class="input-group-text" type="text" name="city" placeholder="Unesite ime grada">
-            <button class="btn btn-primary" type="submit">Pronadji</button>
+        <!-- User Favourites -->
+        <div class="row g-4">
+            @foreach($userFavourites as $userFavourite)
+                @php
+                    $icon = \App\Http\ForecastHelper::IconsByWeatherType($userFavourite->city->todaysForecast->weather_type);
+                @endphp
+                <div class="col-md-3">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body d-flex align-items-center justify-content-between">
+                            <!-- Left Side: Weather Icon -->
+                            <i class="{{ $icon }}" style="font-size: 2rem;"></i>
+                            <!-- Center: City and Temperature -->
+                            <div class="text-center">
+                                <p class="mb-1 fw-bold">{{ $userFavourite->city->city }}</p>
+                                <p class="mb-0 text-muted">{{ $userFavourite->city->todaysForecast->temperature }} °C</p>
+                            </div>
+                            <!-- Right Side: Remove Icon -->
+                            <a
+                                href="{{ route('city.unfavourite', ['city' => $userFavourite->city]) }}"
+                                class="text-danger"
+                            >
+                                <i class="fa-solid fa-xmark" style="font-size: 1.5rem;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
-    </form>
+    </div>
+
 @endsection
