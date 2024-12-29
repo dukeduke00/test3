@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+
 
 class CitiesModel extends Model
 {
@@ -20,5 +22,11 @@ class CitiesModel extends Model
    public function weather()
    {
        return $this->hasMany(WeatherModel::class, 'city_id', 'id');
+   }
+
+   public function todaysForecast()
+   {
+       return $this->hasOne(ForecastModel::class, 'city_id', 'id')
+           ->whereDate('forecasted_at', Carbon::now());
    }
 }

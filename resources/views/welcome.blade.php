@@ -2,6 +2,12 @@
 
 @section('content')
 
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <form method="GET" action="{{ route('forecast.search') }}" style="margin-top:350px"  class="d-flex justify-content-center align-items-center">
 
         <div class="d-flex flex-column gap-3">

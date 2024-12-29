@@ -27,7 +27,12 @@ class ForecastController extends Controller
     {
         $cityName = $request->get('city');
 
-        $cities = CitiesModel::where('city', 'like', "%$cityName%")->get();
+        $cities = CitiesModel::with('todaysForecast')->where('city', 'like', "%$cityName%")->get();
+
+        if($cities->isEmpty())
+        {
+            return redirect()->back()->with('error', 'Nismo pronasli nijedan grad!');
+        }
 
         return view('search_results', compact('cities'));
     }
