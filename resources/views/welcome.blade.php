@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-
     @if(session('error'))
         <div class="alert alert-danger text-center">
             {{ session('error') }}
@@ -29,17 +27,20 @@
         <div class="row g-4">
             @foreach($userFavourites as $userFavourite)
                 @php
-                    $icon = \App\Http\ForecastHelper::IconsByWeatherType($userFavourite->city->todaysForecast->weather_type);
+                    // Proveri da li 'todaysForecast' postoji pre nego što pristupiš njegovim podacima
+                    $icon = $userFavourite->city->todaysForecast ? \App\Http\ForecastHelper::IconsByWeatherType($userFavourite->city->todaysForecast->weather_type) : 'default-icon-class';
+                    $temperature = $userFavourite->city->todaysForecast ? $userFavourite->city->todaysForecast->temperature : 'N/A';
                 @endphp
                 <div class="col-md-3">
                     <div class="card shadow-sm border-0 h-100">
                         <div class="card-body d-flex align-items-center justify-content-between">
+
                             <!-- Left Side: Weather Icon -->
                             <i class="{{ $icon }}" style="font-size: 2rem;"></i>
                             <!-- Center: City and Temperature -->
                             <div class="text-center">
                                 <p class="mb-1 fw-bold">{{ $userFavourite->city->city }}</p>
-                                <p class="mb-0 text-muted">{{ $userFavourite->city->todaysForecast->temperature }} °C</p>
+                                <p class="mb-0 text-muted">{{ $temperature }} °C</p>
                             </div>
                             <!-- Right Side: Remove Icon -->
                             <a
@@ -56,3 +57,4 @@
     </div>
 
 @endsection
+

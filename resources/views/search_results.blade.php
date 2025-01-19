@@ -1,3 +1,4 @@
+@php use App\Http\ForecastHelper; @endphp
 @extends('layout')
 
 @section('content')
@@ -18,7 +19,8 @@
                 <div class="col-12 col-sm-6 col-md-3 mb-3">
                     <div class="d-flex align-items-center p-3" style="background-color: #d4edda; border-radius: 8px;">
                         @php
-                            $icon = \App\Http\ForecastHelper::IconsByWeatherType($city->todaysForecast->weather_type)
+                            // Proveri da li postoji 'todaysForecast' pre nego što pozoveš metodu
+                            $icon = $city->todaysForecast ? ForecastHelper::IconsByWeatherType($city->todaysForecast->weather_type) : 'default-icon-class';
                         @endphp
                         <i class="{{ $icon }} me-2"></i>
                         <p class="mb-0 flex-grow-1">
@@ -28,9 +30,11 @@
                             </a>
                         </p>
                         @if(in_array($city->id, $userFavourites))
-                            <a href="{{ route('city.unfavourite', ['city' => $city->id])  }} "><i class="fa-solid fa-heart"></i></a>
+                            <a href="{{ route('city.unfavourite', ['city' => $city->id])  }} "><i
+                                    class="fa-solid fa-heart"></i></a>
                         @else
-                            <a href="{{ route('city.favourite', ['city' => $city->id]) }}"><i class="fa-regular fa-heart ms-auto"></i></a>
+                            <a href="{{ route('city.favourite', ['city' => $city->id]) }}"><i
+                                    class="fa-regular fa-heart ms-auto"></i></a>
                         @endif
 
                     </div>
@@ -38,6 +42,5 @@
             @endforeach
         </div>
     </div>
-
 
 @endsection

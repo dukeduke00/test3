@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\AdminCheckMiddleware;
 use App\Models\UserCitiesModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -8,7 +9,7 @@ use App\Http\Controllers\AdminForecastsController;
 use App\Http\Controllers\AdminWeatherController;
 use App\Http\Controllers\ForecastController;
 use App\Http\Controllers\WeatherController;
-use App\Http\Middleware\AdminCheckMiddleware;
+
 
 
 /*
@@ -45,6 +46,8 @@ Route::get('/sedmicnaPrognoza', [ForecastController::class,'index']);
 Route::get('/forecast/search', [ForecastController::class, 'search'])->name('forecast.search');
 
 Route::get('/forecast/{city:city}', [ForecastController::class, 'allForecasts'])->name('forecast.permalink');
+
+
 
 /*
  * User cities
