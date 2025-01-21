@@ -14,10 +14,13 @@ class ForecastHelper
 
     public static function IconsByWeatherType($weatherType)
     {
-        $icon = self::WEATHER_ICONS[$weatherType];
+        if (array_key_exists($weatherType, self::WEATHER_ICONS)) {
+            return self::WEATHER_ICONS[$weatherType];
+        }
 
-        return $icon;
+        return 'fa-question';
     }
+
 
 
 
